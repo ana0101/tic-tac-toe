@@ -1,6 +1,10 @@
+import random
+
+
 class Game:
     board = [[' ' for j in range(3)] for i in range(3)]   
     turn = 'X'
+    first_move = True
 
     def __init__(self):
         pass
@@ -86,25 +90,32 @@ class Game:
         while self.game_over() == 'n':
             # check whose turn it is
             if self.turn == 'X':
-                best_value = -100
-                # x and y optimal coordinates
-                x = -1
-                y = -1
-                # consider all possible moves
-                for i in range(3):
-                    for j in range(3):
-                        if self.board[i][j] == ' ':
-                            self.board[i][j] = 'X'
-                            value = self.minimax('0')
-                            self.board[i][j] = ' '
-                            if value > best_value:
-                                best_value = value
-                                x = i
-                                y = j
+                if self.first_move == True:
+                    self.first_move = False
+                    x = random.randint(0, 2)
+                    y = random.randint(0, 2)
+                else:
+                    best_value = -100
+                    # x and y optimal coordinates
+                    x = -1
+                    y = -1
+                    # consider all possible moves
+                    for i in range(3):
+                        for j in range(3):
+                            if self.board[i][j] == ' ':
+                                self.board[i][j] = 'X'
+                                value = self.minimax('0')
+                                self.board[i][j] = ' '
+                                if value > best_value:
+                                    best_value = value
+                                    x = i
+                                    y = j
                 self.board[x][y] = 'X'
                 self.display_board()
                 self.turn = '0'
             else:
+                if self.first_move == True:
+                    self.first_move = False
                 ok = False
                 while ok == False:
                     move = input("Enter the coordinates of your move: ")
@@ -122,9 +133,9 @@ class Game:
         ok = False
         while ok == False:
             start = input("Enter 0 if you want to start or X if you want the AI to start: ")
-            if start == '0' or start == 'X':
+            if start == '0' or start.upper() == 'X':
                 ok = True
-                self.turn = start
+                self.turn = start.upper()
                 self.play()
             else:
                 print("Invalid command")
