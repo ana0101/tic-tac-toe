@@ -1,0 +1,1 @@
+An AI that plays tic tac toe using the minimax algorithm
