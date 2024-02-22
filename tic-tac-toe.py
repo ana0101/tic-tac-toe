@@ -65,7 +65,6 @@ class Game:
                 for j in range(3):
                     if self.board[i][j] == ' ':
                         self.board[i][j] = 'X'
-                        #self.display_board()
                         value = self.minimax('0')
                         self.board[i][j] = ' '
                         if value > best_value:
@@ -76,7 +75,6 @@ class Game:
                 for j in range(3):
                     if self.board[i][j] == ' ':
                         self.board[i][j] = '0'
-                        #self.display_board()
                         value = self.minimax('X')
                         self.board[i][j] = ' '
                         if value < best_value:
@@ -98,7 +96,6 @@ class Game:
                         if self.board[i][j] == ' ':
                             self.board[i][j] = 'X'
                             value = self.minimax('0')
-                            print(value)
                             self.board[i][j] = ' '
                             if value > best_value:
                                 best_value = value
@@ -121,6 +118,18 @@ class Game:
         self.winner(self.game_over())
 
 
+    def start_play(self):
+        ok = False
+        while ok == False:
+            start = input("Enter 0 if you want to start or X if you want the AI to start: ")
+            if start == '0' or start == 'X':
+                ok = True
+                self.turn = start
+                self.play()
+            else:
+                print("Invalid command")
+
+
     def valid_move(self, x, y):
         if x < 0 or x > 2 or y < 0 or y > 2:
             print("Invalid move")
@@ -139,4 +148,4 @@ class Game:
 
 
 game = Game()
-game.play()
+game.start_play()
